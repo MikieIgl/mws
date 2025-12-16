@@ -32,6 +32,13 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'edit-profile',
+    loadComponent: () =>
+      import('./edit-profile/edit-profile.component').then(
+        (m) => m.EditProfileComponent
+      ),
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'dashboard',

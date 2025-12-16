@@ -90,7 +90,7 @@
               <span>Administration</span>
             </a>
             <a routerLink="/profile" class="search-item">
-              <span>Игловский Михаил Александрович</span>
+              <span>{{ userFullName }}</span>
             </a>
           </div>
 
@@ -200,7 +200,7 @@
     >
       <!-- User avatar -->
       <div class="user-avatar">
-        <div class="avatar-initials">MI</div>
+        <div class="avatar-initials">{{ userInitials }}</div>
       </div>
 
       <!-- Chevron icon -->
@@ -225,9 +225,9 @@
     <div #userPanel class="user-panel" [class.open]="isUserPanelOpen">
       <ul class="user-panel-list">
         <li class="current-user">
-          <a class="user-profile-link" routerLink="/under-development">
-            <div class="user-full-name">Игловский Михаил Александрович</div>
-            <div class="user-username">@m.iglovskiy</div>
+          <a class="user-profile-link" routerLink="/edit-profile">
+            <div class="user-full-name">{{ userFullName }}</div>
+            <div class="user-username">{{ userUsername }}</div>
           </a>
         </li>
 
@@ -238,7 +238,7 @@
         </li>
 
         <li>
-          <a class="user-panel-link" routerLink="/under-development">Edit profile</a>
+          <a class="user-panel-link" routerLink="/edit-profile">Edit profile</a>
         </li>
 
         <li>

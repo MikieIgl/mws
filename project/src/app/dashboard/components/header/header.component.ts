@@ -4,10 +4,13 @@ import {
   HostListener,
   ViewChild,
   inject,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { KioskModeService } from '../../services/kiosk-mode.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { Auth, User, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-header',
@@ -16,19 +19,69 @@ import { AuthService } from '../../../auth/services/auth.service';
   standalone: true,
   imports: [RouterLink],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   kioskModeService = inject(KioskModeService);
   private authService = inject(AuthService);
+  private auth = inject(Auth);
   private router = inject(Router);
   
   isUserPanelOpen = false;
   isSearchPanelOpen = false;
   isNotificationsPanelOpen = false;
   isNewPanelOpen = false;
+  currentUser: User | null = null;
+  userInitials: string = 'U'; // Default initials
+  userFullName: string = 'Игловский Михаил Александрович'; // Default name
+  userUsername: string = '@m.iglovskiy'; // Default username
 
   @ViewChild('userPanel') userPanel!: ElementRef;
   @ViewChild('userDropdownToggle') userDropdownToggle!: ElementRef;
   @ViewChild('searchModal') searchModal!: ElementRef;
+
+  private unsubscribeAuthState: (() => void) | null = null;
+
+  ngOnInit(): void {
+    this.updateUserInfo();
+    
+    // Listen for auth state changes to update user info
+    this.unsubscribeAuthState = onAuthStateChanged(this.auth, (user) => {
+      this.currentUser = user;
+      this.updateUserInfo();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.unsubscribeAuthState) {
+      this.unsubscribeAuthState();
+    }
+  }
+
+  updateUserInfo(): void {
+    this.currentUser = this.authService.getCurrentUser();
+    if (this.currentUser) {
+      // Get user's display name or email
+      this.userFullName = this.currentUser.displayName || this.currentUser.email || this.userFullName;
+      
+      // Try to get username from localStorage first, fallback to email-based username
+      const storedUsername = localStorage.getItem('userUsername');
+      if (storedUsername) {
+        this.userUsername = storedUsername;
+      } else {
+        this.userUsername = `@${this.currentUser.email?.split('@')[0] || this.userUsername}`;
+      }
+      
+      // Generate initials from display name or email
+      if (this.currentUser.displayName) {
+        const names = this.currentUser.displayName.split(' ');
+        this.userInitials = names.length > 1 
+          ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
+          : names[0][0].toUpperCase();
+      } else if (this.currentUser.email) {
+        const emailName = this.currentUser.email.split('@')[0];
+        this.userInitials = emailName.substring(0, 2).toUpperCase();
+      }
+    }
+  }
 
   toggleUserPanel(): void {
     this.isUserPanelOpen = !this.isUserPanelOpen;
