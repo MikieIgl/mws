@@ -9,7 +9,6 @@ tmp/
 .env
 .env.local
 .env.*.local
-src/environments/environment.ts
 
 # IDE files
 .vscode/
