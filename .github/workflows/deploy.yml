@@ -1,4 +1,3 @@
-
 name: Deploy to GitHub Pages
 
 on:
@@ -12,7 +11,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -31,13 +30,12 @@ jobs:
 
       - name: Install dependencies
         working-directory: project
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build Angular
         working-directory: project
         run: npm run build -- --configuration production --base-href "/mws/"
 
-      # SPA fallback для Angular роутинга
       - name: Add 404.html
         working-directory: project
         run: cp dist/frontend/index.html dist/frontend/404.html
