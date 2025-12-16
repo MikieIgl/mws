@@ -16,32 +16,40 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+      NX_CACHE_DIRECTORY: ".nx/cache"
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: project/package-lock.json
 
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: project/.nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('project/package-lock.json', 'project/nx.json', 'project/project.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
       - name: Install dependencies
         working-directory: project
         run: npm ci --legacy-peer-deps
 
-      - name: Build Angular
+      - name: Build (Nx / Angular)
         working-directory: project
-        run: npm run build -- --configuration production --base-href "/mws/"
+        run: npx nx build frontend --configuration production --base-href="/mws/"
 
       - name: Add 404.html
         working-directory: project
         run: cp dist/frontend/index.html dist/frontend/404.html
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: project/dist/frontend
 
@@ -51,8 +59,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Deploy
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
