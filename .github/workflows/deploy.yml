@@ -18,6 +18,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,18 +33,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: project/package-lock.json
 
-      - name: Cache node modules
-        uses: actions/cache@v4
-        id: node-modules-cache
-        with:
-          path: project/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('project/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
-
       - name: Install dependencies
         working-directory: project
-        run: npm ci
+        run: |
+          npm config set fund false
+          npm config set audit false
+          npm ci --no-audit --no-fund
 
       - name: Build
         working-directory: project
