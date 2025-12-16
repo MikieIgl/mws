@@ -5,8 +5,9 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { KioskModeService } from '../../services/kiosk-mode.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,8 @@ import { KioskModeService } from '../../services/kiosk-mode.service';
 })
 export class HeaderComponent {
   kioskModeService = inject(KioskModeService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   
   isUserPanelOpen = false;
   isSearchPanelOpen = false;
@@ -27,8 +30,6 @@ export class HeaderComponent {
   @ViewChild('userDropdownToggle') userDropdownToggle!: ElementRef;
   @ViewChild('searchModal') searchModal!: ElementRef;
 
-  constructor() {}
-
   toggleUserPanel(): void {
     this.isUserPanelOpen = !this.isUserPanelOpen;
   }
@@ -36,6 +37,10 @@ export class HeaderComponent {
   openSearchPanel(event?: Event): void {
     if (event) {
       event.stopPropagation();
+      // Prevent default space key behavior (scrolling)
+      if (event instanceof KeyboardEvent && event.key === ' ') {
+        event.preventDefault();
+      }
     }
     this.isSearchPanelOpen = true;
   }
@@ -54,6 +59,17 @@ export class HeaderComponent {
 
   toggleNewPanel(): void {
     this.isNewPanelOpen = !this.isNewPanelOpen;
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error:', error);
+      },
+    });
   }
 
   @HostListener('window:resize')

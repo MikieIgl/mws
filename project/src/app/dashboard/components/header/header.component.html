@@ -6,7 +6,7 @@
   <div class="search-overlay" [class.visible]="isSearchPanelOpen"></div>
 
   <!-- Left home icon -->
-  <a routerLink="/dashboard" href="dashboard" class="home-icon-link">
+  <a routerLink="dashboard" href="dashboard" class="home-icon-link">
     <img src="/detectiveWhaleIcon.png" alt="Home" class="home-icon-image" />
   </a>
 
@@ -14,7 +14,11 @@
   <div
     class="search-container"
     [class.expanded]="isSearchPanelOpen"
+    role="button"
+    tabindex="0"
     (click)="openSearchPanel($event)"
+    (keydown.enter)="openSearchPanel($event)"
+    (keydown.space)="openSearchPanel($event)"
   >
     <div class="search-input-wrapper">
       <input
@@ -46,6 +50,9 @@
       class="search-dropdown"
       [class.open]="isSearchPanelOpen"
       (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      (keydown.space)="$event.stopPropagation()"
+      tabindex="0"
     >
       <!-- Search dropdown content -->
       <div #searchModal class="search-dropdown-content">
@@ -241,7 +248,13 @@
         <li class="divider"></li>
 
         <li>
-          <a class="user-panel-link sign-out-link" href="login">Sign out</a>
+          <button
+            type="button"
+            class="user-panel-link sign-out-link"
+            (click)="logout()"
+          >
+            Sign out
+          </button>
         </li>
       </ul>
     </div>
