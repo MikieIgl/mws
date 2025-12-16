@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Angular
         working-directory: project
-        run: npm run build -- --configuration production --base-href "/mws/"
+        run: npx nx build frontend --configuration production --base-href="/mws/"
 
       - name: Add 404.html
         working-directory: project
