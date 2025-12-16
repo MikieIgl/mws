@@ -18,10 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+      PLAYWRIGHT_BROWSERS_PATH: "0"
       NX_CACHE_DIRECTORY: ".nx/cache"
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -33,17 +36,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: project/.nx/cache
-          key: ${{ runner.os }}-nx-${{ hashFiles('project/package-lock.json', 'project/nx.json', 'project/project.json') }}
+          key: ${{ runner.os }}-nx-${{ hashFiles('project/package-lock.json', 'project/nx.json', 'project/**/project.json') }}
           restore-keys: |
             ${{ runner.os }}-nx-
 
       - name: Install dependencies
         working-directory: project
-        run: npm ci --legacy-peer-deps
+        run: npm ci --legacy-peer-deps --prefer-offline
 
-      - name: Build (Nx / Angular)
+      - name: Build Angular
         working-directory: project
-        run: npx nx build frontend --configuration production --base-href="/mws/"
+        run: npm run build -- --configuration production --base-href "/mws/"
 
       - name: Add 404.html
         working-directory: project
