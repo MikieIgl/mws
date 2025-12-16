@@ -42,7 +42,11 @@ export class RegisterComponent {
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
+    if (
+      password &&
+      confirmPassword &&
+      password.value !== confirmPassword.value
+    ) {
       return { passwordMismatch: true };
     }
     return null;
@@ -55,19 +59,19 @@ export class RegisterComponent {
    */
   getPasswordStrength(password: string): number {
     if (!password) return 0;
-    
+
     let strength = 0;
-    
+
     // Длина пароля
     if (password.length >= 8) strength++;
     if (password.length >= 12) strength++;
-    
+
     // Разнообразие символов
     if (/[a-z]/.test(password)) strength++; // строчные буквы
     if (/[A-Z]/.test(password)) strength++; // заглавные буквы
     if (/[0-9]/.test(password)) strength++; // цифры
     if (/[^A-Za-z0-9]/.test(password)) strength++; // специальные символы
-    
+
     // Максимальная оценка - 4
     return Math.min(strength, 4);
   }
@@ -79,12 +83,18 @@ export class RegisterComponent {
    */
   getPasswordStrengthText(strength: number): string {
     switch (strength) {
-      case 0: return 'Введите пароль';
-      case 1: return 'Очень слабый';
-      case 2: return 'Слабый';
-      case 3: return 'Средний';
-      case 4: return 'Сильный';
-      default: return '';
+      case 0:
+        return 'Введите пароль';
+      case 1:
+        return 'Очень слабый';
+      case 2:
+        return 'Слабый';
+      case 3:
+        return 'Средний';
+      case 4:
+        return 'Сильный';
+      default:
+        return '';
     }
   }
 
@@ -95,12 +105,18 @@ export class RegisterComponent {
    */
   getPasswordStrengthColor(strength: number): string {
     switch (strength) {
-      case 0: return '#6b7280'; // серый
-      case 1: return '#ef4444'; // красный
-      case 2: return '#f97316'; // оранжевый
-      case 3: return '#eab308'; // желтый
-      case 4: return '#22c55e'; // зеленый
-      default: return '#6b7280';
+      case 0:
+        return '#6b7280'; // серый
+      case 1:
+        return '#ef4444'; // красный
+      case 2:
+        return '#f97316'; // оранжевый
+      case 3:
+        return '#eab308'; // желтый
+      case 4:
+        return '#22c55e'; // зеленый
+      default:
+        return '#6b7280';
     }
   }
 

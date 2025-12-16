@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.less'],
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule],
 })
 export class EditProfileComponent implements OnInit {
   private auth = inject(Auth);
@@ -36,7 +36,9 @@ export class EditProfileComponent implements OnInit {
       if (storedUsername) {
         this.userUsername = storedUsername;
       } else {
-        this.userUsername = `@${this.currentUser.email?.split('@')[0] || this.userUsername}`;
+        this.userUsername = `@${
+          this.currentUser.email?.split('@')[0] || this.userUsername
+        }`;
       }
       this.editedFullName = this.userFullName;
       this.editedUsername = this.userUsername;
@@ -71,16 +73,18 @@ export class EditProfileComponent implements OnInit {
       }
 
       updateProfile(this.currentUser, {
-        displayName: this.editedFullName
-      }).then(() => {
-        this.userFullName = this.editedFullName;
-        this.userUsername = this.editedUsername;
-        // Save username to localStorage for reactive updates in header
-        localStorage.setItem('userUsername', this.editedUsername);
-        this.isEditing = false;
-      }).catch((error) => {
-        console.error('Error updating profile:', error);
-      });
+        displayName: this.editedFullName,
+      })
+        .then(() => {
+          this.userFullName = this.editedFullName;
+          this.userUsername = this.editedUsername;
+          // Save username to localStorage for reactive updates in header
+          localStorage.setItem('userUsername', this.editedUsername);
+          this.isEditing = false;
+        })
+        .catch((error) => {
+          console.error('Error updating profile:', error);
+        });
     }
   }
 
@@ -95,7 +99,7 @@ export class EditProfileComponent implements OnInit {
       // Generate initials from display name or email
       if (this.currentUser.displayName) {
         const names = this.currentUser.displayName.split(' ');
-        return names.length > 1 
+        return names.length > 1
           ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
           : names[0][0].toUpperCase();
       } else if (this.currentUser.email) {
@@ -106,7 +110,7 @@ export class EditProfileComponent implements OnInit {
     // Default initials
     return 'U';
   }
- 
+
   goBack(): void {
     this.router.navigate(['/dashboard']);
   }

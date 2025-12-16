@@ -7,24 +7,24 @@ import { CommonModule } from '@angular/common';
   templateUrl: './kiosk-mode.component.html',
   styleUrls: ['./kiosk-mode.component.less'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class KioskModeComponent {
   kioskModeService = inject(KioskModeService);
-  
-  constructor() { }
-  
+
+  constructor() {}
+
   hideKioskNotification(): void {
     this.kioskModeService.hideKioskNotification();
   }
-  
+
   @HostListener('document:keydown.escape')
   onEscapeKey(): void {
     // Exit kiosk mode if active
     if (this.kioskModeService.isKioskMode()) {
       this.kioskModeService.toggle();
     }
-    
+
     // Hide kiosk notification if visible
     if (this.kioskModeService.isKioskNotificationVisible()) {
       this.kioskModeService.hideKioskNotification();

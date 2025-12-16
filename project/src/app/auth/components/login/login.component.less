@@ -3,7 +3,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top, #101522 0, #050814 45%, #000000 100%);
+  background: radial-gradient(
+    circle at top,
+    #101522 0,
+    #050814 45%,
+    #000000 100%
+  );
   color: #e5e7eb;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
@@ -176,14 +181,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   .pw-icon {
     width: 18px;
     height: 18px;
     fill: #6b7280;
     transition: fill 0.15s ease;
   }
-  
+
   &:hover {
     .pw-icon {
       fill: #9ca3af;
@@ -212,8 +217,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 14px 30px rgba(37, 99, 235, 0.5);
-  transition: transform 0.08s ease, box-shadow 0.08s ease,
-    filter 0.12s ease;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
 
   &:hover:not(:disabled) {
     filter: brightness(1.06);

@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private auth = inject(Auth);
   private router = inject(Router);
-  
+
   isUserPanelOpen = false;
   isSearchPanelOpen = false;
   isNotificationsPanelOpen = false;
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateUserInfo();
-    
+
     // Listen for auth state changes to update user info
     this.unsubscribeAuthState = onAuthStateChanged(this.auth, (user) => {
       this.currentUser = user;
@@ -60,22 +60,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentUser = this.authService.getCurrentUser();
     if (this.currentUser) {
       // Get user's display name or email
-      this.userFullName = this.currentUser.displayName || this.currentUser.email || this.userFullName;
-      
+      this.userFullName =
+        this.currentUser.displayName ||
+        this.currentUser.email ||
+        this.userFullName;
+
       // Try to get username from localStorage first, fallback to email-based username
       const storedUsername = localStorage.getItem('userUsername');
       if (storedUsername) {
         this.userUsername = storedUsername;
       } else {
-        this.userUsername = `@${this.currentUser.email?.split('@')[0] || this.userUsername}`;
+        this.userUsername = `@${
+          this.currentUser.email?.split('@')[0] || this.userUsername
+        }`;
       }
-      
+
       // Generate initials from display name or email
       if (this.currentUser.displayName) {
         const names = this.currentUser.displayName.split(' ');
-        this.userInitials = names.length > 1 
-          ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
-          : names[0][0].toUpperCase();
+        this.userInitials =
+          names.length > 1
+            ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
+            : names[0][0].toUpperCase();
       } else if (this.currentUser.email) {
         const emailName = this.currentUser.email.split('@')[0];
         this.userInitials = emailName.substring(0, 2).toUpperCase();
@@ -168,7 +174,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const newDropdownToggle = document.querySelector('.new-dropdown-toggle');
 
       const clickedInsideNewPanel =
-        newPanel && event.target instanceof Node && newPanel.contains(event.target);
+        newPanel &&
+        event.target instanceof Node &&
+        newPanel.contains(event.target);
       const clickedInsideNewToggle =
         newDropdownToggle &&
         event.target instanceof Node &&

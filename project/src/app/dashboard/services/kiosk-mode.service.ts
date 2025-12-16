@@ -15,7 +15,7 @@ export class KioskModeService {
   enable() {
     this.isKioskMode.set(true);
     this.kioskModeToggled.next(true);
-    
+
     // Show notification after a short delay
     setTimeout(() => {
       this.showKioskNotification();
@@ -41,11 +41,11 @@ export class KioskModeService {
     if (this.kioskNotificationTimeout) {
       clearTimeout(this.kioskNotificationTimeout);
     }
-    
+
     // Show the notification
     this.isKioskNotificationVisible.set(true);
     this.showNotification.next();
-    
+
     // Hide the notification after 3 seconds
     this.kioskNotificationTimeout = setTimeout(() => {
       this.hideKioskNotification();
@@ -55,7 +55,7 @@ export class KioskModeService {
   hideKioskNotification(): void {
     this.isKioskNotificationVisible.set(false);
     this.hideNotification.next();
-    
+
     // Clear any existing timeout
     if (this.kioskNotificationTimeout) {
       clearTimeout(this.kioskNotificationTimeout);

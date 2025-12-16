@@ -14,8 +14,8 @@ export const authGuard: CanActivateFn = (route, state) => {
     timeout(5000), // Увеличиваем таймаут до 5 секунд для надежности
     map((isAuthenticated) => {
       if (!isAuthenticated) {
-        router.navigate(['/login'], { 
-          queryParams: { returnUrl: state.url }
+        router.navigate(['/login'], {
+          queryParams: { returnUrl: state.url },
         });
         return false;
       }
@@ -23,8 +23,8 @@ export const authGuard: CanActivateFn = (route, state) => {
     }),
     catchError(() => {
       // В случае ошибки или таймаута перенаправляем на login
-      router.navigate(['/login'], { 
-        queryParams: { returnUrl: state.url }
+      router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url },
       });
       return of(false);
     })

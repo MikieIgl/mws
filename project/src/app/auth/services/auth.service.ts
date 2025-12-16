@@ -22,7 +22,9 @@ export class AuthService {
    * Регистрация нового пользователя
    */
   register(email: string, password: string): Observable<UserCredential> {
-    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
+    return from(
+      createUserWithEmailAndPassword(this.auth, email, password)
+    ).pipe(
       catchError((error) => {
         console.error('Registration error:', error);
         return throwError(() => this.handleAuthError(error));

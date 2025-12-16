@@ -6,7 +6,6 @@ import { NgIf } from '@angular/common';
   selector: 'app-under-development',
   templateUrl: './under-development.component.html',
   styleUrls: ['./under-development.component.less'],
-  imports: [NgIf],
   standalone: true,
 })
 export class UnderDevelopmentComponent {

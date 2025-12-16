@@ -54,7 +54,8 @@ export class LoginComponent {
     this.errorMessage = '';
 
     const { email, password } = this.form.value;
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    const returnUrl =
+      this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
 
     this.authService.login(email, password).subscribe({
       next: () => {
