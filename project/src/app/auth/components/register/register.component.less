@@ -105,6 +105,28 @@
   color: #f87171;
 }
 
+.password-strength {
+  margin-top: 8px;
+  
+  .strength-meter {
+    height: 4px;
+    background: rgba(55, 65, 81, 0.9);
+    border-radius: 2px;
+    overflow: hidden;
+    
+    .strength-bar {
+      height: 100%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+  }
+  
+  .strength-text {
+    margin-top: 4px;
+    font-size: 11px;
+    text-align: right;
+  }
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -143,6 +165,39 @@
 
     &[type='password'] {
       letter-spacing: 0.08em;
+    }
+  }
+}
+
+.password-field {
+  input {
+    padding-right: 40px;
+  }
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .pw-icon {
+    width: 18px;
+    height: 18px;
+    fill: #6b7280;
+    transition: fill 0.15s ease;
+  }
+  
+  &:hover {
+    .pw-icon {
+      fill: #9ca3af;
     }
   }
 }

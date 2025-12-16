@@ -25,6 +25,8 @@ export class RegisterComponent {
   form: FormGroup;
   isSubmitting = false;
   errorMessage = '';
+  showPassword = false;
+  showConfirmPassword = false;
 
   constructor() {
     this.form = this.fb.group(
@@ -44,6 +46,76 @@ export class RegisterComponent {
       return { passwordMismatch: true };
     }
     return null;
+  }
+
+  /**
+   * Вычисляет силу пароля и возвращает уровень сложности
+   * @param password Пароль для оценки
+   * @returns Число от 0 до 4, где 0 - очень слабый, 4 - очень сильный
+   */
+  getPasswordStrength(password: string): number {
+    if (!password) return 0;
+    
+    let strength = 0;
+    
+    // Длина пароля
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    
+    // Разнообразие символов
+    if (/[a-z]/.test(password)) strength++; // строчные буквы
+    if (/[A-Z]/.test(password)) strength++; // заглавные буквы
+    if (/[0-9]/.test(password)) strength++; // цифры
+    if (/[^A-Za-z0-9]/.test(password)) strength++; // специальные символы
+    
+    // Максимальная оценка - 4
+    return Math.min(strength, 4);
+  }
+
+  /**
+   * Возвращает текстовое описание силы пароля
+   * @param strength Уровень сложности пароля
+   * @returns Текстовое описание
+   */
+  getPasswordStrengthText(strength: number): string {
+    switch (strength) {
+      case 0: return 'Введите пароль';
+      case 1: return 'Очень слабый';
+      case 2: return 'Слабый';
+      case 3: return 'Средний';
+      case 4: return 'Сильный';
+      default: return '';
+    }
+  }
+
+  /**
+   * Возвращает цвет индикатора силы пароля
+   * @param strength Уровень сложности пароля
+   * @returns Цвет индикатора
+   */
+  getPasswordStrengthColor(strength: number): string {
+    switch (strength) {
+      case 0: return '#6b7280'; // серый
+      case 1: return '#ef4444'; // красный
+      case 2: return '#f97316'; // оранжевый
+      case 3: return '#eab308'; // желтый
+      case 4: return '#22c55e'; // зеленый
+      default: return '#6b7280';
+    }
+  }
+
+  /**
+   * Переключает видимость пароля
+   */
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  /**
+   * Переключает видимость подтверждения пароля
+   */
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   submit(): void {

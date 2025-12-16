@@ -158,6 +158,39 @@
   }
 }
 
+.password-field {
+  input {
+    padding-right: 40px;
+  }
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .pw-icon {
+    width: 18px;
+    height: 18px;
+    fill: #6b7280;
+    transition: fill 0.15s ease;
+  }
+  
+  &:hover {
+    .pw-icon {
+      fill: #9ca3af;
+    }
+  }
+}
+
 .auth-actions {
   margin-top: 4px;
   display: flex;

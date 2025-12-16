@@ -23,12 +23,20 @@ export class LoginComponent {
   form: FormGroup;
   isSubmitting = false;
   errorMessage = '';
+  showPassword = false;
 
   constructor() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  /**
+   * Переключает видимость пароля
+   */
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   submit(): void {

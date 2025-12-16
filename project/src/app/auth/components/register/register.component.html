@@ -33,13 +33,39 @@
 
       <div class="field">
         <label class="field-label" for="password">Пароль</label>
-        <div class="field-input">
+        <div class="field-input password-field">
           <input
             id="password"
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
             formControlName="password"
             placeholder="••••••••"
           />
+          <button 
+            type="button" 
+            class="password-toggle" 
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Скрыть пароль' : 'Показать пароль'"
+          >
+            <svg class="pw-icon" viewBox="0 0 24 24" aria-hidden="true" *ngIf="!showPassword">
+              <path d="M12 5c5.5 0 9.6 4.1 11 7-1.4 2.9-5.5 7-11 7S2.4 15.9 1 12c1.4-2.9 5.5-7 11-7Zm0 3.2A3.8 3.8 0 1 0 12 16a3.8 3.8 0 0 0 0-7.6Zm0 2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+            </svg>
+            <svg class="pw-icon" viewBox="0 0 24 24" aria-hidden="true" *ngIf="showPassword">
+              <path d="M12 5c5.5 0 9.6 4.1 11 7-1.4 2.9-5.5 7-11 7S2.4 15.9 1 12c1.4-2.9 5.5-7 11-7Zm0 3.2A3.8 3.8 0 1 0 12 16a3.8 3.8 0 0 0 0-7.6Zm0 2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+              <path d="M2 2L22 22" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="password-strength" *ngIf="form.get('password')?.value">
+          <div class="strength-meter">
+            <div 
+              class="strength-bar"
+              [style.width.%]="(getPasswordStrength(form.get('password')?.value) / 4) * 100"
+              [style.background-color]="getPasswordStrengthColor(getPasswordStrength(form.get('password')?.value))"
+            ></div>
+          </div>
+          <div class="strength-text" [style.color]="getPasswordStrengthColor(getPasswordStrength(form.get('password')?.value))">
+            {{ getPasswordStrengthText(getPasswordStrength(form.get('password')?.value)) }}
+          </div>
         </div>
       </div>
 
@@ -47,17 +73,31 @@
         <label class="field-label" for="confirmPassword"
           >Подтверждение пароля</label
         >
-        <div class="field-input">
+        <div class="field-input password-field">
           <input
             id="confirmPassword"
-            type="password"
+            [type]="showConfirmPassword ? 'text' : 'password'"
             formControlName="confirmPassword"
             placeholder="••••••••"
           />
+          <button 
+            type="button" 
+            class="password-toggle" 
+            (click)="toggleConfirmPasswordVisibility()"
+            [attr.aria-label]="showConfirmPassword ? 'Скрыть пароль' : 'Показать пароль'"
+          >
+            <svg class="pw-icon" viewBox="0 0 24 24" aria-hidden="true" *ngIf="!showConfirmPassword">
+              <path d="M12 5c5.5 0 9.6 4.1 11 7-1.4 2.9-5.5 7-11 7S2.4 15.9 1 12c1.4-2.9 5.5-7 11-7Zm0 3.2A3.8 3.8 0 1 0 12 16a3.8 3.8 0 0 0 0-7.6Zm0 2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+            </svg>
+            <svg class="pw-icon" viewBox="0 0 24 24" aria-hidden="true" *ngIf="showConfirmPassword">
+              <path d="M12 5c5.5 0 9.6 4.1 11 7-1.4 2.9-5.5 7-11 7S2.4 15.9 1 12c1.4-2.9 5.5-7 11-7Zm0 3.2A3.8 3.8 0 1 0 12 16a3.8 3.8 0 0 0 0-7.6Zm0 2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+              <path d="M2 2L22 22" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
         </div>
         <div
           *ngIf="
-            form.get('confirmPassword')?.touched &&
+            form.get('confirmPassword')?.dirty &&
             form.hasError('passwordMismatch')
           "
           class="field-error"
