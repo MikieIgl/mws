@@ -25,12 +25,19 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
   },
   {
+    path: 'under-development',
+    loadComponent: () =>
+      import('./shared/components/under-development/under-development.component').then(
+        (m) => m.UnderDevelopmentComponent
+      ),
+  },
+  {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'under-development',
   },
 ];
