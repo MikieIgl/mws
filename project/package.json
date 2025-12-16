@@ -5,7 +5,8 @@
     "scripts": {
         "start": "nx serve frontend",
         "build": "nx build frontend",
-        "test": "nx test frontend"
+        "test": "nx test frontend",
+        "deploy": "nx build frontend --base-href=/mws/ && npx angular-cli-ghpages --dir=dist/frontend"
     },
     "private": true,
     "dependencies": {
