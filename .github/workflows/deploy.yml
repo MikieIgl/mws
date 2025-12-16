@@ -35,7 +35,7 @@ jobs:
 
       - name: Build Angular
         working-directory: project
-        run: npm run build -- --configuration production --base-href "/mws0/"
+        run: npm run build -- --configuration production --base-href "/mws/"
 
       # SPA fallback для Angular роутинга
       - name: Add 404.html
