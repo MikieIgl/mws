@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -20,6 +20,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   form: FormGroup;
   isSubmitting = false;
   errorMessage = '';
@@ -30,6 +31,10 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  ngOnInit(): void {
+    // При инициализации компонента можно выполнить дополнительные действия, если необходимо
   }
 
   /**
@@ -49,10 +54,11 @@ export class LoginComponent {
     this.errorMessage = '';
 
     const { email, password } = this.form.value;
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
 
     this.authService.login(email, password).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigateByUrl(returnUrl);
       },
       error: (error: string) => {
         this.errorMessage = error;

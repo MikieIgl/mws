@@ -8,16 +8,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Проверяем текущего пользователя синхронно
-  const currentUser = authService.getCurrentUser();
-  if (currentUser) {
-    return true;
-  }
-
-  // Если пользователя нет, проверяем асинхронно
+  // Всегда проверяем асинхронно, чтобы дождаться восстановления состояния аутентификации
   return authService.isAuthenticated().pipe(
     first(), // Берем первое значение и завершаем Observable
-    timeout(2000), // Таймаут 2 секунды
+    timeout(5000), // Увеличиваем таймаут до 5 секунд для надежности
     map((isAuthenticated) => {
       if (!isAuthenticated) {
         router.navigate(['/login'], { 

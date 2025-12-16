@@ -66,15 +66,7 @@ export class AuthService {
    */
   isAuthenticated(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      // Сначала проверяем текущего пользователя синхронно
-      const currentUser = this.auth.currentUser;
-      if (currentUser !== null) {
-        observer.next(true);
-        observer.complete();
-        return;
-      }
-
-      // Если пользователя нет, ждем изменения состояния
+      // Всегда ждем изменения состояния аутентификации для корректной работы при обновлении страницы
       const unsubscribe = this.auth.onAuthStateChanged((user) => {
         observer.next(!!user);
         observer.complete();
