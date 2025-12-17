@@ -32,6 +32,13 @@ export const appRoutes: Route[] = [
       ).then((m) => m.UnderDevelopmentComponent),
   },
   {
+    path: 'create-with-json',
+    loadComponent: () =>
+      import('./create-with-json/create-with-json.component').then(
+        (m) => m.CreateWithJsonComponent
+      ),
+  },
+  {
     path: 'edit-profile',
     loadComponent: () =>
       import('./edit-profile/edit-profile.component').then(

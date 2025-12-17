@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
   templateUrl: './under-development.component.html',
   styleUrls: ['./under-development.component.less'],
   standalone: true,
+  imports: [NgIf]
 })
 export class UnderDevelopmentComponent {
   constructor(private router: Router) {}
