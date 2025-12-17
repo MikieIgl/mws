@@ -27,9 +27,9 @@ export const appRoutes: Route[] = [
   {
     path: 'under-development',
     loadComponent: () =>
-      import('./shared/components/under-development/under-development.component').then(
-        (m) => m.UnderDevelopmentComponent
-      ),
+      import(
+        './shared/components/under-development/under-development.component'
+      ).then((m) => m.UnderDevelopmentComponent),
   },
   {
     path: 'edit-profile',
@@ -41,7 +41,7 @@ export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
   },
   {
     path: '**',
