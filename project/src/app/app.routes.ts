@@ -20,7 +20,7 @@ export const appRoutes: Route[] = [
     path: 'dashboard',
     loadComponent: () =>
       import('./dashboard/components/main-page/main-page.component').then(
-        (m) => m.MainPageComponent
+        (m) => m.default
       ),
     canActivate: [authGuard],
   },

@@ -10,7 +10,7 @@ import { DashboardsListComponent } from '../dashboards-list/dashboards-list.comp
   styleUrls: ['./main-page.component.less'],
   imports: [HeaderComponent, KioskModeComponent, DashboardsListComponent],
 })
-export class MainPageComponent {
+export default class MainPageComponent {
   kioskModeService = inject(KioskModeService);
 
   constructor() {}

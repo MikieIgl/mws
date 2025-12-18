@@ -1,108 +1,129 @@
 <div class="dashboards-container">
-  <div class="dashboards-header">
-    <div class="header-content">
-      <div class="title-container">
-        <h1>Dashboards</h1>
+  <div class="dashboards-wrapper">
+    <div class="dashboards-header">
+      <div class="header-content">
+        <div class="title-container">
+          <h1>Dashboards</h1>
+        </div>
       </div>
+      <div class="header-description">Create and manage dashboards to visualize your data</div>
     </div>
-    <div class="header-description">Create and manage dashboards to visualize your data</div>
-  </div>
 
-  <div class="dashboards-content">
-    <div class="search-and-filters">
-      <div class="search-container">
-        <div class="search-input-wrapper">
-          <div class="search-input-prefix">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="search-icon">
-              <path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path>
-            </svg>
-          </div>
-          <input class="search-input" type="text" placeholder="Search for dashboards and folders" />
-        </div>
-      </div>
-
-      <div class="filters-container">
-        <div class="filter-group">
-          <div class="tag-filter-wrapper">
-            <div class="tag-filter-container">
-              <div class="tag-filter-prefix">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
-                  <path d="M7.5,6A1.5,1.5,0,1,0,9,7.5,1.5,1.5,0,0,0,7.5,6Zm13.62,4.71L12.71,2.29A1,1,0,0,0,12,2H3A1,1,0,0,0,2,3v9a1,1,0,0,0,.29.71l8.42,8.41a3,3,0,0,0,4.24,0L21.12,15a3,3,0,0,0,0-4.24Zm-1.41,2.82h0l-6.18,6.17a1,1,0,0,1-1.41,0L4,11.59V4h7.59l8.12,8.12a1,1,0,0,1,.29.71A1,1,0,0,1,19.71,13.53Z"></path>
-                </svg>
-              </div>
-              <div class="tag-filter-value-container">
-                <div class="tag-filter-placeholder">Filter by tag</div>
-              </div>
-              <div class="tag-filter-suffix">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
-                  <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
-                </svg>
-              </div>
+    <div class="dashboards-content">
+      <div class="search-and-filters">
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <div class="search-input-prefix">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="search-icon" fill="#ffffff">
+                <path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path>
+              </svg>
             </div>
-          </div>
-
-          <div class="starred-filter">
-            <label class="checkbox-container">
-              <div class="checkbox-wrapper">
-                <input type="checkbox" class="checkbox-input" />
-                <span class="checkbox-checkmark"></span>
-              </div>
-              <span class="checkbox-label">Starred</span>
-            </label>
+            <input class="dashboards-search-input" type="text" placeholder="Search dashboards" />
           </div>
         </div>
 
-        <div class="view-and-sort">
-          <div class="view-options" role="radiogroup">
-            <div class="view-option" data-testid="data-testid radio-button">
-              <input type="radio" class="radio-input" id="option-folders" name="view-mode" checked />
-              <label class="radio-label" for="option-folders" title="View by folders">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="view-icon">
-                  <path d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"></path>
-                </svg>
-              </label>
+        <div class="filters-container">
+          <div class="filter-group">
+            <div class="tag-filter-wrapper">
+              <div class="tag-filter-container">
+                <div class="tag-filter-prefix">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
+                    <path d="M7.5,6A1.5,1.5,0,1,0,9,7.5,1.5,1.5,0,0,0,7.5,6Zm13.62,4.71L12.71,2.29A1,1,0,0,0,12,2H3A1,1,0,0,0,2,3v9a1,1,0,0,0,.29.71l8.42,8.41a3,3,0,0,0,4.24,0L21.12,15a3,3,0,0,0,0-4.24Zm-1.41,2.82h0l-6.18,6.17a1,1,0,0,1-1.41,0L4,11.59V4h7.59l8.12,8.12a1,1,0,0,1,.29.71A1,1,0,0,1,19.71,13.53Z"></path>
+                  </svg>
+                </div>
+                <div class="tag-filter-value-container">
+                  <div class="tag-filter-placeholder">Filter by tag</div>
+                </div>
+                <div class="tag-filter-suffix">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="caret-down">
+                    <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
+                  </svg>
+                </div>
+              </div>
             </div>
-            <div class="view-option" data-testid="data-testid radio-button">
-              <input type="radio" class="radio-input" id="option-list" name="view-mode" />
-              <label class="radio-label" for="option-list" title="View as list">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="view-icon">
-                  <path d="M3.71,16.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21,1,1,0,0,0-.21.33,1,1,0,0,0,.21,1.09,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1,1,0,0,0,.21-1.09A1,1,0,0,0,3.71,16.29ZM7,8H21a1,1,0,0,0,0-2H7A1,1,0,0,0,7,8ZM3.71,11.29a1,1,0,0,0-1.09-.21,1.15,1.15,0,0,0-.33.21,1,1,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1,1,0,0,0,3.71,11.29ZM21,11H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2ZM3.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-1.09.21,1.15,1.15,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21,1,1,0,0,0,1.09-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1.15,1.15,0,0,0,3.71,6.29ZM21,16H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"></path>
-                </svg>
+
+            <div class="starred-filter">
+              <label class="checkbox-container">
+                <div class="checkbox-wrapper">
+                  <input type="checkbox" class="checkbox-input" />
+                  <span class="checkbox-checkmark"></span>
+                </div>
+                <span class="checkbox-label">Starred</span>
               </label>
             </div>
           </div>
 
-          <div class="sort-wrapper">
-            <div class="sort-container">
-              <div class="sort-prefix">
-                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
-                  <path d="M5.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-2,2A1,1,0,0,0,3.71,9.71L4,9.41V17a1,1,0,0,0,2,0V9.41l.29.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM11,8H21a1,1,0,0,0,0-2H11a1,1,0,0,0,0,2Zm10,8H11a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm0-5H11a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"></path>
-                </svg>
+          <div class="view-and-sort">
+            <div class="view-options" role="radiogroup">
+              <div class="view-option" data-testid="data-testid radio-button">
+                <input type="radio" class="radio-input" id="option-folders" name="view-mode" [checked]="viewMode === 'folders'" (change)="setViewMode('folders')" />
+                <label class="radio-label" for="option-folders" title="View by folders">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="view-icon">
+                    <path d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"></path>
+                  </svg>
+                </label>
               </div>
-              <div class="sort-value-container">
-                <div class="sort-placeholder">Sort</div>
+              <div class="view-option" data-testid="data-testid radio-button">
+                <input type="radio" class="radio-input" id="option-list" name="view-mode" [checked]="viewMode === 'list'" (change)="setViewMode('list')" />
+                <label class="radio-label" for="option-list" title="View as list">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="view-icon">
+                    <path d="M3.71,16.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21,1,1,0,0,0-.21.33,1,1,0,0,0,.21,1.09,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1,1,0,0,0,.21-1.09A1,1,0,0,0,3.71,16.29ZM7,8H21a1,1,0,0,0,0-2H7A1,1,0,0,0,7,8ZM3.71,11.29a1,1,0,0,0-1.09-.21,1.15,1.15,0,0,0-.33.21,1,1,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1,1,0,0,0,3.71,11.29ZM21,11H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2ZM3.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-1.09.21,1.15,1.15,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21,1,1,0,0,0,1.09-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1.15,1.15,0,0,0,3.71,6.29ZM21,16H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"></path>
+                  </svg>
+                </label>
               </div>
-              <div class="sort-suffix">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
-                  <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
-                </svg>
+            </div>
+
+            <div class="sort-wrapper">
+              <div class="sort-container">
+                <div class="sort-prefix">
+                  <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="filter-icon">
+                    <path d="M5.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-2,2A1,1,0,0,0,3.71,9.71L4,9.41V17a1,1,0,0,0,2,0V9.41l.29.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM11,8H21a1,1,0,0,0,0-2H11a1,1,0,0,0,0,2Zm10,8H11a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm0-5H11a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"></path>
+                  </svg>
+                </div>
+                <div class="sort-value-container">
+                  <div class="sort-placeholder">Sort</div>
+                </div>
+                <div class="sort-suffix">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" class="caret-down">
+                    <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="dashboards-table-container">
-      <div class="dashboards-table">
-        <div class="table-header" role="row">
-          <div class="table-header-cell name-column">Name</div>
-          <div class="table-header-cell tags-column">Tags</div>
-        </div>
-        <div class="table-body" role="rowgroup">
-          <!-- Dashboard items will be added here dynamically -->
-          <div class="empty-state">
-            <p>No dashboards found. Create your first dashboard to get started.</p>
+      <div class="dashboards-table-container">
+        <div class="dashboards-table">
+          <!-- Folders view -->
+          <div *ngIf="viewMode === 'folders'" class="table-header" role="row">
+            <div class="table-header-cell name-column">Name</div>
+            <div class="table-header-cell tags-column">Tags</div>
+          </div>
+          
+          <!-- List view -->
+          <div *ngIf="viewMode === 'list'" class="table-header" role="row">
+            <div class="table-header-cell name-column">Name</div>
+            <div class="table-header-cell">Type</div>
+            <div class="table-header-cell">Location</div>
+            <div class="table-header-cell tags-column">Tags</div>
+          </div>
+          
+          <div class="table-body" role="rowgroup">
+            <!-- Folders view content -->
+            <div *ngIf="viewMode === 'folders'">
+              <div class="empty-state">
+                <p>No dashboards found. Create your first dashboard to get started.</p>
+              </div>
+            </div>
+            
+            <!-- List view content -->
+            <div *ngIf="viewMode === 'list'">
+              <div class="empty-state">
+                <p>No dashboards found. Create your first dashboard to get started.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
