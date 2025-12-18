@@ -7,7 +7,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { KioskModeService } from '../../services/kiosk-mode.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Auth, User, onAuthStateChanged } from '@angular/fire/auth';
@@ -17,7 +17,7 @@ import { Auth, User, onAuthStateChanged } from '@angular/fire/auth';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RouterModule],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   kioskModeService = inject(KioskModeService);

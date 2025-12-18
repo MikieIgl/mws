@@ -42,6 +42,26 @@
   line-height: 1.5;
 }
 
+.new-project-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+    border-color: rgba(148, 163, 184, 0.5);
+    color: #cbd5e1;
+  }
+}
+
 .dashboards-content {
   background: transparent;
   padding: 0;
@@ -113,6 +133,7 @@
 
 .tag-filter-wrapper {
   min-width: 180px;
+  position: relative; /* Ensure proper positioning context for dropdown */
 }
 
 .tag-filter-container {
@@ -124,6 +145,8 @@
   padding: 4px 8px;
   cursor: pointer;
   transition: border-color 0.15s ease;
+  position: relative; /* Ensure proper stacking context */
+  z-index: 101; /* Higher than dropdown to ensure proper layering */
 
   &:hover {
     border-color: #3b82f6;
@@ -148,6 +171,32 @@
   color: #94a3b8;
   font-size: 13px;
   padding: 4px 0;
+}
+
+.tag-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0;
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+.tag-option {
+  padding: 8px 16px;
+  color: #e5e7eb;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+  }
 }
 
 .starred-filter {
@@ -304,6 +353,7 @@
 
 .sort-wrapper {
   min-width: 140px;
+  position: relative; /* Ensure proper positioning context for dropdown */
 }
 
 .sort-container {
@@ -315,6 +365,8 @@
   padding: 4px 8px;
   cursor: pointer;
   transition: border-color 0.15s ease;
+  position: relative; /* Ensure proper stacking context */
+  z-index: 101; /* Higher than dropdown to ensure proper layering */
 
   &:hover {
     border-color: #3b82f6;
@@ -339,6 +391,32 @@
   color: #94a3b8;
   font-size: 13px;
   padding: 4px 0;
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0;
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+.sort-option {
+  padding: 8px 16px;
+  color: #e5e7eb;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+  }
 }
 
 .dashboards-table-container {
@@ -458,6 +536,11 @@
   transition: transform 0.2s ease;
 }
 
+// Animation for caret when dropdown is opened
+.dropdown-open .caret-down {
+  transform: rotate(180deg);
+}
+
 // Folder item styles
 .folder-item {
   display: flex;
@@ -503,6 +586,167 @@
   color: #93c5fd;
   padding: 2px 8px;
   border-radius: 4px;
+}
+
+// Folder structure styles
+.folder-container {
+  margin-bottom: 0;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.5);
+  
+  &:not(:last-child) {
+    border-bottom: none;
+  }
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.95);
+  
+  &.edit-folder-header,
+  &.delete-folder-header {
+    background: rgba(15, 23, 42, 0.95);
+  }
+}
+
+.folder-name {
+  font-size: 16px;
+  color: #e5e7eb;
+  font-weight: normal;
+  margin-left: 8px;
+  flex: 1;
+  text-align: left;
+}
+
+.folder-actions {
+  display: flex;
+  gap: 8px;
+  margin-right: 8px;
+}
+
+.folder-action-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+    color: #e5e7eb;
+  }
+  
+  &.confirm-btn:hover {
+    color: #4ade80; // Green for confirm
+  }
+  
+  &.cancel-btn:hover {
+    color: #f87171; // Red for cancel
+  }
+}
+
+.folder-chevron {
+  transition: transform 0.2s ease;
+  color: #94a3b8;
+  
+  &.rotated {
+    transform: rotate(90deg);
+  }
+}
+
+.folder-name-input {
+  flex: 1;
+  margin-left: 8px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: #e5e7eb;
+  font-size: 16px;
+  font-weight: 500;
+  
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.delete-confirm-text {
+  font-size: 16px;
+  color: #f87171; // Red color for delete confirmation
+  font-weight: 500;
+  margin-left: 8px;
+  flex: 1;
+  text-align: left;
+}
+
+.folder-tags-section {
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.folder-tags-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.tags-label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.folder-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.folder-projects {
+  padding: 8px 0;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px 12px 48px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  transition: background 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.project-content {
+  flex: 1;
+}
+
+.project-name {
+  font-size: 14px;
+  color: #e5e7eb;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.project-meta {
+  font-size: 12px;
+  color: #94a3b8;
 }
 
 // List view styles
@@ -566,10 +810,28 @@
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
+  margin-right: 4px;
 }
 
 .no-tags {
   color: #6b7280;
   font-style: italic;
   font-size: 12px;
+}
+
+.add-tag-btn {
+  background: transparent;
+  border: 1px dashed rgba(148, 163, 184, 0.3);
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  margin-left: 4px;
+  
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+    border-style: solid;
+    color: #e5e7eb;
+  }
 }

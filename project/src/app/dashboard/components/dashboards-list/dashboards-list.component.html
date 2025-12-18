@@ -5,9 +5,16 @@
         <div class="title-container">
           <h1>Dashboards</h1>
         </div>
+        <button class="new-project-button" (click)="navigateToCreateWithJson()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          New Project
+        </button>
       </div>
       <div class="header-description">
-        Create and manage dashboards to visualize your data
+        Create and manage dashboards to visualize your secrets
       </div>
     </div>
 
@@ -41,7 +48,7 @@
         <div class="filters-container">
           <div class="filter-group">
             <div class="tag-filter-wrapper">
-              <div class="tag-filter-container">
+              <div class="tag-filter-container" (click)="toggleTagDropdown($event)" [class.dropdown-open]="showTagDropdown">
                 <div class="tag-filter-prefix">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +64,7 @@
                   </svg>
                 </div>
                 <div class="tag-filter-value-container">
-                  <div class="tag-filter-placeholder">Filter by tag</div>
+                  <div class="tag-filter-placeholder">{{ selectedTag ? selectedTag : 'Filter by tag' }}</div>
                 </div>
                 <div class="tag-filter-suffix">
                   <svg
@@ -74,12 +81,22 @@
                   </svg>
                 </div>
               </div>
+              
+              <!-- Tag dropdown menu -->
+              <div class="tag-dropdown" *ngIf="showTagDropdown">
+                <div class="tag-option" (click)="setSelectedTag(null); $event.stopPropagation()">
+                  <span>All tags</span>
+                </div>
+                <div *ngFor="let tag of getAllTags()" class="tag-option" (click)="setSelectedTag(tag); $event.stopPropagation()">
+                  <span>{{ tag }}</span>
+                </div>
+              </div>
             </div>
 
             <div class="starred-filter">
               <label class="checkbox-container">
                 <div class="checkbox-wrapper">
-                  <input type="checkbox" class="checkbox-input" />
+                  <input type="checkbox" class="checkbox-input" (change)="toggleStarredFilter($event)" />
                   <span class="checkbox-checkmark"></span>
                 </div>
                 <span class="checkbox-label">Starred</span>
@@ -148,7 +165,7 @@
             </div>
 
             <div class="sort-wrapper">
-              <div class="sort-container">
+              <div class="sort-container" (click)="toggleSortDropdown($event)" [class.dropdown-open]="showSortDropdown">
                 <div class="sort-prefix">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +182,11 @@
                   </svg>
                 </div>
                 <div class="sort-value-container">
-                  <div class="sort-placeholder">Sort</div>
+                  <div class="sort-placeholder">
+                    <span *ngIf="sortOrder === 'none'">Sort</span>
+                    <span *ngIf="sortOrder === 'asc'">Alphabetically (A–Z)</span>
+                    <span *ngIf="sortOrder === 'desc'">Alphabetically (Z–A)</span>
+                  </div>
                 </div>
                 <div class="sort-suffix">
                   <svg
@@ -182,12 +203,25 @@
                   </svg>
                 </div>
               </div>
+              
+              <!-- Sort dropdown menu -->
+              <div class="sort-dropdown" *ngIf="showSortDropdown">
+                <div class="sort-option" (click)="setSortOrder('none'); showSortDropdown = false; $event.stopPropagation()">
+                  <span>None</span>
+                </div>
+                <div class="sort-option" (click)="setSortOrder('asc'); showSortDropdown = false; $event.stopPropagation()">
+                  <span>Alphabetically (A–Z)</span>
+                </div>
+                <div class="sort-option" (click)="setSortOrder('desc'); showSortDropdown = false; $event.stopPropagation()">
+                  <span>Alphabetically (Z–A)</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="dashboards-table-container">
+      <div class="dashboards-table-container" *ngIf="!starredFilterActive">
         <div class="dashboards-table">
           <!-- Folders view -->
           <div *ngIf="viewMode === 'folders'" class="table-header" role="row">
@@ -206,31 +240,154 @@
           <div class="table-body" role="rowgroup">
             <!-- Folders view content -->
             <div *ngIf="viewMode === 'folders'">
-              <div *ngIf="dashboards.length === 0" class="empty-state">
+              <div *ngIf="folders.length === 0" class="empty-state">
                 <p>
                   No dashboards found. Create your first dashboard to get
                   started.
                 </p>
               </div>
-              <div *ngFor="let dashboard of dashboards" class="folder-item" (click)="navigateToProject(dashboard.id)">
-                <div class="folder-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"
-                    ></path>
-                  </svg>
+              <div *ngFor="let folder of folders" class="folder-container">
+                <div class="folder-header" (click)="toggleFolder(folder.name)" *ngIf="editingFolder !== folder.name && deletingFolder !== folder.name">
+                  <div class="folder-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="folder-name">{{ folder.name }}</div>
+                  <div class="folder-actions">
+                    <button class="folder-action-btn" (click)="startEditingFolder(folder.name); $event.stopPropagation();" title="Edit folder name">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0,0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                      </svg>
+                    </button>
+                    <button class="folder-action-btn" (click)="startDeletingFolder(folder.name); $event.stopPropagation();" title="Delete folder">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="folder-chevron" [class.rotated]="isFolderExpanded(folder.name)">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M9 18l6-6-6-6"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-                <div class="folder-content">
-                  <div class="folder-name">{{ dashboard.name }}</div>
-                  <div class="folder-meta">
-                    <span class="file-count">{{ dashboard.fileCount }} files</span>
+                
+                <!-- Folder tags section -->
+                <div class="folder-tags-section" *ngIf="isFolderExpanded(folder.name) && editingFolder !== folder.name && deletingFolder !== folder.name">
+                  <div class="folder-tags-header">
+                    <span class="tags-label">Tags:</span>
+                    <button class="add-tag-btn" (click)="addFolderTag(folder.name); $event.stopPropagation();" title="Add tag to folder">
+                      +
+                    </button>
+                  </div>
+                  <div class="folder-tags-container">
+                    <span *ngFor="let tag of getFolderTags(folder)" class="tag">
+                      {{ tag }}
+                    </span>
+                    <span *ngIf="getFolderTags(folder).length === 0" class="no-tags">No tags</span>
+                  </div>
+                </div>
+                
+                <!-- Edit folder UI -->
+                <div class="folder-header edit-folder-header" *ngIf="editingFolder === folder.name">
+                  <div class="folder-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <input 
+                    class="folder-name-input" 
+                    [(ngModel)]="newFolderName" 
+                    (keyup.enter)="confirmEditingFolder()" 
+                    (keyup.escape)="cancelEditingFolder()"
+                    placeholder="Enter folder name"
+                    autofocus
+                  />
+                  <div class="folder-actions">
+                    <button class="folder-action-btn confirm-btn" (click)="confirmEditingFolder(); $event.stopPropagation();" title="Confirm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </button>
+                    <button class="folder-action-btn cancel-btn" (click)="cancelEditingFolder(); $event.stopPropagation();" title="Cancel">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Delete folder confirmation UI -->
+                <div class="folder-header delete-folder-header" *ngIf="deletingFolder === folder.name">
+                  <div class="folder-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M19,5.5H12.72l-.32-1a3,3,0,0,0-2.84-2H5a3,3,0,0,0-3,3v13a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V8.5A3,3,0,0,0,19,5.5Zm1,13a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5.5a1,1,0,0,1,1-1H9.56a1,1,0,0,1,.95.68l.54,1.64A1,1,0,0,0,12,7.5h7a1,1,0,0,1,1,1Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="folder-name delete-confirm-text">Delete folder "{{ folder.name }}" and all its projects?</div>
+                  <div class="folder-actions">
+                    <button class="folder-action-btn confirm-btn" (click)="confirmDeletingFolder(); $event.stopPropagation();" title="Confirm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </button>
+                    <button class="folder-action-btn cancel-btn" (click)="cancelDeletingFolder(); $event.stopPropagation();" title="Cancel">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="folder-projects" *ngIf="isFolderExpanded(folder.name)">
+                  <div *ngFor="let project of folder.projects" class="project-item" (click)="navigateToProject(project.id)">
+                  <div class="project-content">
+                    <div class="project-name">{{ project.name }}</div>
+                    <div class="project-meta">
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -265,7 +422,7 @@
                   </div>
                 </div>
                 <div class="list-cell" role="gridcell">{{ dashboard.type }}</div>
-                <div class="list-cell" role="gridcell">{{ dashboard.location }}</div>
+                <div class="list-cell" role="gridcell">{{ dashboard.folder || 'No folder' }}</div>
                 <div class="list-cell tags-column" role="gridcell">
                   <div class="tags-container">
                     <span

@@ -42,7 +42,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
     // When toggling edit mode, also toggle tag deletion mode
     this.isTagDeletionMode = this.isEditMode;
-    
+
     // Handle project name editing
     if (this.isEditMode) {
       this.startEditName();
@@ -187,7 +187,9 @@ export class ProjectDetailsComponent implements OnInit {
     }
 
     // Confirm deletion
-    const confirmed = confirm(`Are you sure you want to delete the project "${this.project.name}"? This action cannot be undone.`);
+    const confirmed = confirm(
+      `Are you sure you want to delete the project "${this.project.name}"? This action cannot be undone.`
+    );
     if (!confirmed) {
       return;
     }
@@ -197,7 +199,7 @@ export class ProjectDetailsComponent implements OnInit {
       // Note: This only removes the project from the projects collection
       // It does not delete any files or folders associated with the project
       await remove(projectRef);
-      
+
       // Navigate back to the dashboard after successful deletion
       this.router.navigate(['/dashboard']);
     } catch (error) {

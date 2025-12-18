@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FileUploadComponent } from '../shared';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-create-with-json',
@@ -9,8 +9,19 @@ import { FileUploadComponent } from '../shared';
   standalone: true,
   imports: [FileUploadComponent],
 })
-export class CreateWithJsonComponent {
-  constructor(private router: Router) {}
+export class CreateWithJsonComponent implements OnInit {
+  viewMode: 'folders' | 'list' = 'list';
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.viewMode = params['viewMode'] === 'folders' ? 'folders' : 'list';
+    });
+  }
 
   goBack() {
     window.history.back();

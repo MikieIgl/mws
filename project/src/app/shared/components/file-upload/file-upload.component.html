@@ -55,6 +55,36 @@
       />
     </div>
 
+    <!-- Project name input -->
+    <div class="form-group">
+      <label for="projectName" class="form-label">Название проекта</label>
+      <input
+        id="projectName"
+        type="text"
+        [(ngModel)]="projectName"
+        placeholder="Введите название проекта"
+        class="form-input"
+      />
+    </div>
+
+    <!-- Folder selection -->
+    <div class="form-group" *ngIf="viewMode === 'folders'">
+      <label for="folderSelect" class="form-label">Папка</label>
+      <select
+        id="folderSelect"
+        [(ngModel)]="selectedFolder"
+        class="form-select"
+      >
+        <option value="">Создать новую папку</option>
+        <option
+          *ngFor="let folder of availableFolders"
+          [value]="folder"
+        >
+          {{ folder }}
+        </option>
+      </select>
+    </div>
+
     <div class="files-info" *ngIf="selectedFiles.length > 0">
       <h3 class="files-info-title">Выбранные файлы:</h3>
       <div class="file-list">
