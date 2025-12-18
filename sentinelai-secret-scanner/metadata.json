@@ -1,5 +1,0 @@
-{
-  "name": "SentinelAI Secret Scanner",
-  "description": "A high-fidelity cybersecurity dashboard for triaging secrets detected by AI, featuring dark mode aesthetics and interactive data visualization.",
-  "requestFramePermissions": []
-}
