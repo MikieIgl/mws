@@ -7,7 +7,6 @@ import { provideRouter } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { appRoutes } from './app.routes';
 import { environment } from '../environments/environment';
 
@@ -18,6 +17,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
   ],
 };
