@@ -40,6 +40,14 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'project/:id',
+    loadComponent: () =>
+      import('./dashboard/components/project-details/project-details.component').then(
+        (m) => m.ProjectDetailsComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: 'edit-profile',
     loadComponent: () =>
       import('./edit-profile/edit-profile.component').then(

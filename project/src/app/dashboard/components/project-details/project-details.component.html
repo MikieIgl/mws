@@ -1,0 +1,102 @@
+<div class="project-details-container">
+  <div *ngIf="project === null" class="loading-state">
+    <p>Loading project details...</p>
+  </div>
+  
+  <div *ngIf="project === undefined" class="not-found-state">
+    <h2>Project Not Found</h2>
+    <p>The requested project could not be found.</p>
+  </div>
+  
+  <div *ngIf="project && project !== null && project !== undefined">
+    <div class="project-header">
+      <div class="header-content">
+        <h1 class="project-title" *ngIf="!isEditingName">{{ project.name }}</h1>
+        <input 
+          *ngIf="isEditingName" 
+          type="text" 
+          class="edit-name-input" 
+          [(ngModel)]="editedName" 
+          (keyup.enter)="saveEditedName()" 
+          maxlength="50"
+          autofocus
+        />
+        <div class="header-controls">
+          <button class="btn-edit" [ngClass]="{'edit-mode': isEditMode}" (click)="toggleEditMode()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4 11.5-11.5z"/>
+              <path d="M15 5l4 4"/>
+            </svg>
+          </button>
+          <button class="btn-back" (click)="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back
+          </button>
+        </div>
+      </div>
+      
+      <div class="edit-name-buttons" *ngIf="isEditingName">
+        <button class="btn-save-name" (click)="saveEditedName()">Save</button>
+        <button class="btn-cancel-name" (click)="cancelEditName()">Cancel</button>
+      </div>
+      
+      <div class="project-meta">
+        <div class="meta-item">
+          <span class="meta-label">Created:</span>
+          <span class="meta-value">{{ project.createdAt | date:'medium' }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Last update:</span>
+          <span class="meta-value">{{ project.updatedAt | date:'medium' }}</span>
+        </div>
+      </div>
+      
+      <div class="header-tags">
+        <div class="tags-container">
+          <span *ngFor="let tag of project.tags; let i = index" class="tag">
+            {{ tag }}
+            <button class="btn-remove-tag" (click)="removeTag(i)" *ngIf="isTagDeletionMode">×</button>
+          </span>
+          <button 
+            class="btn-add-tag" 
+            (click)="toggleTagInput()"
+            *ngIf="isTagDeletionMode"
+          >
+            Add Tag
+          </button>
+        </div>
+      </div>
+
+      <div class="add-tag-section" *ngIf="showTagInput">
+        <div class="tag-input-container">
+          <input 
+            type="text" 
+            class="tag-input" 
+            placeholder="Enter a tag (max 6 characters)" 
+            [(ngModel)]="newTagInput"
+            (keyup.enter)="addTags()"
+            [disabled]="isAddingTags"
+            maxlength="6"
+            #tagInput
+          />
+          <button 
+            class="btn-add-tag-inline" 
+            (click)="addTags()" 
+            [disabled]="!newTagInput || isAddingTags"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+      
+      <div class="delete-project-section">
+        <button class="btn-delete-project" (click)="deleteProject()">
+          Delete Project
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,16 +12,14 @@
 }
 
 .dashboards-wrapper {
-  padding: 24px 0 0 0; /* Added top padding to move content lower */
-  max-width: 1000px; /* Made the width narrower */
-  margin: 0 auto; /* Center the narrowed block */
-  
+  padding: 24px 0 0 0;
+  margin-left: 66px; /* Move left boundary further left */
+  margin-right: 66px; /* Move right boundary further right (stronger adjustment) */
 }
 
 .dashboards-header {
   margin-bottom: 24px;
   margin-top: 24px; /* Move the header lower */
-  
 }
 
 .header-content {
@@ -285,11 +283,11 @@
 }
 
 /* Text for specific tooltips */
-.radio-label[for="option-folders"]::after {
+.radio-label[for='option-folders']::after {
   content: 'View by folders';
 }
 
-.radio-label[for="option-list"]::after {
+.radio-label[for='option-list']::after {
   content: 'View as list';
 }
 
@@ -355,10 +353,10 @@
 .table-header {
   display: flex;
   border-bottom: 1px solid rgba(148, 163, 184, 0.16);
-  padding: 8px 0;
-  background: rgba(15, 23, 42, 0.95); /* Add background color */
-  justify-content: flex-start; /* Align to the left */
-  align-items: center; /* Vertically center items */
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.95);
+  align-items: center;
+  width: 100%;
 }
 
 .table-header-cell {
@@ -368,8 +366,9 @@
   color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  text-align: left; /* Align text to the left */
-  flex-shrink: 0; /* Prevent cells from shrinking */
+  text-align: left;
+  flex-shrink: 0;
+  box-sizing: border-box;
 
   &.name-column {
     flex: 3;
@@ -457,4 +456,120 @@
 .caret-down {
   color: #9ca3af;
   transition: transform 0.2s ease;
+}
+
+// Folder item styles
+.folder-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background: transparent;
+  transition: background 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.folder-icon {
+  margin-right: 16px;
+  color: #93c5fd;
+}
+
+.folder-content {
+  flex: 1;
+}
+
+.folder-name {
+  font-size: 16px;
+  color: #e5e7eb;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.folder-meta {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.file-count {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+// List view styles
+.list-row {
+  display: flex;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  transition: background 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(51, 65, 85, 0.3);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.list-cell {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #e5e7eb;
+  flex-shrink: 0;
+
+  &.name-column {
+    flex: 3;
+    display: flex;
+    align-items: center;
+  }
+
+  &.tags-column {
+    flex: 2;
+  }
+}
+
+.name-cell-content {
+  display: flex;
+  align-items: center;
+}
+
+.name-icon {
+  margin-right: 8px;
+  color: #93c5fd;
+}
+
+.dashboard-name {
+  font-weight: 500;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.no-tags {
+  color: #6b7280;
+  font-style: italic;
+  font-size: 12px;
 }

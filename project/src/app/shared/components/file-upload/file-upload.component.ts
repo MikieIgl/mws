@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Database, push, ref } from '@angular/fire/database';
+import { Database, push, ref, get, child, set } from '@angular/fire/database';
 import { NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../../auth';
 import { User } from '@angular/fire/auth';
@@ -20,7 +20,10 @@ export class FileUploadComponent {
   uploadError = false;
   errorMessage = '';
 
-  constructor(private database: Database, private authService: AuthService) {}
+  constructor(
+    private database: Database, 
+    private authService: AuthService
+  ) {}
 
   onFileSelected(event: any): void {
     const files: FileList = event.target.files;
@@ -171,6 +174,10 @@ export class FileUploadComponent {
       const uploadsRef = ref(this.database, 'uploads');
       push(uploadsRef, uploadData)
         .then(() => {
+          // Create a default dashboard project
+          return this.createDefaultDashboardProject(uploadData.fileNames, uploadData.fileCount);
+        })
+        .then(() => {
           this.isUploading = false;
           this.uploadSuccess = true;
           this.selectedFiles = [];
@@ -193,6 +200,37 @@ export class FileUploadComponent {
     this.isUploading = false;
     this.uploadError = true;
     this.errorMessage = message;
+  }
+
+  /**
+   * Creates a default dashboard project with the name "Project1_Data"
+   */
+  private async createDefaultDashboardProject(fileNames: string[], fileCount: number): Promise<void> {
+    try {
+      const currentUser: User | null = this.authService.getCurrentUser();
+      
+      const projectData: any = {
+        name: 'Project1_Data',
+        createdAt: new Date().toISOString(),
+        createdBy: currentUser?.email || 'anonymous',
+        userId: currentUser?.uid || 'anonymous',
+        fileNames: fileNames,
+        fileCount: fileCount,
+        tags: [] // Tags will be added interactively later
+      };
+
+      const projectsRef = ref(this.database, 'projects');
+      const newProjectRef = await push(projectsRef, projectData);
+      
+      // Update the project with its ID
+      await set(ref(this.database, `projects/${newProjectRef.key}`), {
+        ...projectData,
+        id: newProjectRef.key
+      });
+    } catch (error) {
+      console.error('Error creating default dashboard project:', error);
+      // We don't throw the error here because we don't want to fail the upload if project creation fails
+    }
   }
 
   resetForm(): void {
