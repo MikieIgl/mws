@@ -1,0 +1,211 @@
+<div class="create-with-json-container">
+  <div class="page-header">
+    <h1 class="page-title">Создание проекта из файла</h1>
+    <p class="page-subtitle">Загрузите конфигурацию в формате JSON или SARIF</p>
+  </div>
+
+  <div class="content-layout">
+    <!-- Value Proposition Section -->
+    <div class="value-proposition">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 21H3V7H21V21Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9 12H15"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9 16H15"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9 8H10"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M14 8H15"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M8 3H16C16.5304 3 17.0391 3.21071 17.4142 3.58579C17.7893 3.96086 18 4.46957 18 5V21C18 21.5304 17.7893 22.0391 17.4142 22.4142C17.0391 22.7893 16.5304 23 16 23H8C7.46957 23 6.96086 22.7893 6.58579 22.4142C6.21071 22.0391 6 21.5304 6 21V5C6 4.46957 6.21071 3.96086 6.58579 3.58579C6.96086 3.21071 7.46957 3 8 3Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="value-title">Анализ данных</h3>
+        <p class="value-description">
+          Автоматический анализ вашего файла для выявления ключевых метрик и
+          показателей
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 3V19C3 20.1046 3.89543 21 5 21H21"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M7 17L11 9L15 13L19 7"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="value-title">Визуализация</h3>
+        <p class="value-description">
+          Интерактивные графики и диаграммы для наглядного представления данных
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M14 2V8H20"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M16 13H8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M16 17H8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 9H9H8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="value-title">Проект готов</h3>
+        <p class="value-description">
+          Готовый проект с настройками и аналитикой для дальнейшей работы
+        </p>
+      </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div class="upload-section">
+      <div class="upload-layout">
+        <div class="upload-column">
+          <app-file-upload></app-file-upload>
+        </div>
+        <div class="example-column">
+          <div class="example-card">
+            <h3 class="example-title">Пример структуры файла</h3>
+            <div class="example-content">
+              <pre class="example-code"
+                >{{ '{' }}
+  "report_id": "d1aee7f8-7930-4ec8-ab7b-a3425449817f",
+  "status": "completed",
+  "findings": [
+    {{ '{' }}
+      "rule_id": "generic-api-key",
+      "file_path": "src/settings.py",
+      "secret_snippet": "PAYMENTS_API_KEY = \"key-7f3a9cD2e1F4b7H8\"",
+      "is_false_positive": false,
+      "confidence": 0.7869628667831421,
+      "fp_score": 0.2130371332168579,
+      "reasons": [
+        "cnn_prob_tp=0.787",
+        "cnn_fp_score=0.213"
+      ],
+      "ai_verdict": null,
+      "original_location": {{ '{' }}
+        "path": "src/settings.py",
+        "line": 18
+      {{ '}' }}
+    {{ '}' }}
+  ],
+  "stats": null,
+  "error": null
+{{ '}' }}</pre
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <button class="secondary-button" (click)="goBack()">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="button-icon"
+      >
+        <path
+          d="M19 12H5M12 19L5 12L12 5"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      Назад
+    </button>
+  </div>
+</div>

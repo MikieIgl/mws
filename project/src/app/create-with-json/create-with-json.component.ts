@@ -1,15 +1,15 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FileUploadComponent } from '../shared';
 
 @Component({
-  selector: 'app-under-development',
-  templateUrl: './under-development.component.html',
-  styleUrls: ['./under-development.component.less'],
+  selector: 'app-create-with-json',
+  templateUrl: './create-with-json.component.html',
+  styleUrls: ['./create-with-json.component.less'],
   standalone: true,
-  imports: [NgIf],
+  imports: [FileUploadComponent],
 })
-export class UnderDevelopmentComponent {
+export class CreateWithJsonComponent {
   constructor(private router: Router) {}
 
   goBack() {
