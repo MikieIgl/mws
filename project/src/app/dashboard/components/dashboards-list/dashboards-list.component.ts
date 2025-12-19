@@ -83,7 +83,7 @@ export class DashboardsListComponent implements OnInit {
 
       if (data) {
         // First, collect all projects
-        const allProjects: DashboardItem[] = [];
+        let allProjects: DashboardItem[] = [];
         Object.keys(data).forEach((key) => {
           const project = data[key];
           // Filter projects by user ID
@@ -94,13 +94,18 @@ export class DashboardsListComponent implements OnInit {
               type: 'Project',
               location: 'Local',
               tags: project.tags || [],
-              starred: false,
+              starred: project.starred || false,
               createdAt: project.createdAt,
               fileCount: project.fileCount,
               folder: project.folder,
             });
           }
         });
+
+        // Apply starred filter if active
+        if (this.starredFilterActive) {
+          allProjects = allProjects.filter(project => project.starred);
+        }
 
         // Organize projects by view mode
         if (this.viewMode === 'folders') {
@@ -472,6 +477,7 @@ export class DashboardsListComponent implements OnInit {
    */
   toggleStarredFilter(event: any): void {
     this.starredFilterActive = event.target.checked;
+    this.loadUserProjects(); // Reload projects when starred filter changes
   }
 
   /**
@@ -572,5 +578,24 @@ export class DashboardsListComponent implements OnInit {
    */
   getFolderTags(folder: FolderItem): string[] {
     return folder.tags;
+  }
+
+  /**
+   * Determines whether to show the "No results found" illustration
+   */
+  shouldShowNoResults(): boolean {
+    // Show the illustration when starred filter is active but no starred items exist
+    if (this.starredFilterActive) {
+      // Check if there are any starred items
+      if (this.viewMode === 'folders') {
+        // In folder view, check if any folders have projects
+        return this.folders.length === 0;
+      } else {
+        // In list view, check if any dashboards exist
+        return this.dashboards.length === 0;
+      }
+    }
+    // Also show when there are no dashboards/folders at all
+    return (this.viewMode === 'folders' ? this.folders.length === 0 : this.dashboards.length === 0);
   }
 }
